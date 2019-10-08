@@ -26,12 +26,12 @@ public class Archivo {
 		this.path = path;
 	}
 
-        public String getNombre(){
-            if( path == null ){
-                return "";
-            }
-            return path.substring(path.lastIndexOf(File.separator) + 1, path.lastIndexOf("."));
+    public String getNombre(){
+        if( path == null ){
+            return "";
         }
+        return path.substring(path.lastIndexOf(File.separator) + 1, path.lastIndexOf("."));
+    }
         
 	@Override
 	public String toString() {
