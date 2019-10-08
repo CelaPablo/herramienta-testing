@@ -33,9 +33,12 @@ import javax.swing.GroupLayout;
 import java.awt.Color;
 
 import javax.swing.JScrollPane;
+import java.awt.Dimension;
 
 @SuppressWarnings({"serial", "unchecked", "rawtypes"})
 public class UserInterface extends JFrame {
+
+	// cantidad de variables y cantidad de operadores logicos --> agregar
 
     private JButton bt_elegir;
     private JTextField comentariosT;
@@ -148,7 +151,7 @@ public class UserInterface extends JFrame {
         setResizable(false);
 
         jPanel2.setBackground(new Color(46, 139, 87));
-        jPanel2.setPreferredSize(new java.awt.Dimension(682, 716));
+        jPanel2.setPreferredSize(new Dimension(682, 750));
 
         txt_codMetodo.setEditable(false);
         txt_codMetodo.setContentType("text/html");
@@ -334,8 +337,8 @@ public class UserInterface extends JFrame {
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
-        			.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 785, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        			.addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE)
+        			.addContainerGap())
         );
 
         jPanel2.setLayout(null);
@@ -362,7 +365,7 @@ public class UserInterface extends JFrame {
         jPanel2.add(jLabel8);
         jPanel2.add(jLabel10);
         jPanel2.add(jLabel9);
-        
+
         LineasComentarios = new JTextField();
         LineasComentarios.setDisabledTextColor(new Color(0, 0, 0));
         LineasComentarios.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -372,7 +375,7 @@ public class UserInterface extends JFrame {
         LineasComentarios.setBounds(38, 669, 61, 26);
         jPanel2.add(LineasComentarios);
         LineasComentarios.setColumns(10);
-        
+
         LineasCodigo = new JTextField();
         LineasCodigo.setSelectionColor(new Color(0, 153, 153));
         LineasCodigo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -382,7 +385,7 @@ public class UserInterface extends JFrame {
         LineasCodigo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         LineasCodigo.setBounds(38, 631, 61, 26);
         jPanel2.add(LineasCodigo);
-        
+
         JLabel lblLineasDeComentarios = new JLabel();
         lblLineasDeComentarios.setText("Lineas de Comentarios");
         lblLineasDeComentarios.setHorizontalAlignment(SwingConstants.LEFT);
@@ -390,7 +393,7 @@ public class UserInterface extends JFrame {
         lblLineasDeComentarios.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
         lblLineasDeComentarios.setBounds(108, 672, 241, 19);
         jPanel2.add(lblLineasDeComentarios);
-        
+
         JLabel lblLineasDeCdigo = new JLabel();
         lblLineasDeCdigo.setText("Lineas de Código");
         lblLineasDeCdigo.setHorizontalAlignment(SwingConstants.LEFT);
@@ -418,7 +421,7 @@ public class UserInterface extends JFrame {
             }
 
             private String getTitle() {
-                throw new UnsupportedOperationException("Aun no soportado"); 
+                throw new UnsupportedOperationException("Aun no soportado");
             }
         };
         chooser.setFileSelectionMode( JFileChooser.FILES_AND_DIRECTORIES );
@@ -476,7 +479,7 @@ public class UserInterface extends JFrame {
     private void volumenTActionPerformed(java.awt.event.ActionEvent evt) { }
 
     private void directorioTActionPerformed(java.awt.event.ActionEvent evt) { }
-    
+
     //tratamiento de la eleccion del directorio elegido
     private void elegirDirectorio(){
         String path = directorioT.getText();
@@ -486,10 +489,10 @@ public class UserInterface extends JFrame {
             for( Archivo archivo : DirectorioService.getAllArchivos(directorio) ){
                 for( Clase clase : archivo.getClases() ){
                     nombres.add(clase.getNombre());
-                }   
+                }
             }
             lt_clases.requestFocus();
-            if( nombres.isEmpty() ){
+            if(nombres.isEmpty()){
                 JOptionPane.showMessageDialog(this, "El directorio seleccionado no contiene ningún archivo de código Java", getTitle(), JOptionPane.ERROR_MESSAGE);
                 directorioT.requestFocus();
             }
@@ -498,12 +501,12 @@ public class UserInterface extends JFrame {
             directorioT.requestFocus();
         }
         cargarListaClases(nombres);
-        if( nombres.isEmpty() ){
+        if(nombres.isEmpty()){
             resetCodigo();
             cargarListamMetodos(new ArrayList());
         }
     }
-    
+
     private void evaluarCambioMetodo(){
         Metodo metodoSeleccionado = getMetodoSeleccionado();
         if( metodoSeleccionado != null ){
@@ -525,22 +528,26 @@ public class UserInterface extends JFrame {
         fanInT.setText(estadisticas.getFanIn() + "");
         fanOutT.setText(estadisticas.getFanOut() + "");
         longitudT.setText(estadisticas.getLongitud()+ "");
+        LineasCodigo.setText(estadisticas.getLineasTotales() + "");
+        LineasComentarios.setText(estadisticas.getLineasComentadas() + "");
         volumenT.setText(String.format("%.2f",estadisticas.getVolumen()));
     }
-    
+
     private void setTituloCodigo( String titulo ){
         lb_codMetodo.setText("Código del método " + titulo);
     }
-    
+
     private void resetCodigo(){
         txt_codMetodo.setText("");
         comentariosT.setText("");
         complejidadT.setText("");
         fanInT.setText("");
         fanOutT.setText("");
+        LineasCodigo.setText("");
+        LineasComentarios.setText("");
         setTituloCodigo("");
     }
-    
+
     private void evaluarCambioClase(){
         Clase claseSeleccionada = getClaseSeleccionada();
         List<Metodo> nombres = new ArrayList<>();
@@ -552,7 +559,7 @@ public class UserInterface extends JFrame {
         resetCodigo();
         cargarListamMetodos(nombres);
     }
-    
+
     private Metodo getMetodoSeleccionado(){
         Metodo metodoSeleccionado = (Metodo) lt_metodos.getSelectedValue();
         if( metodoSeleccionado == null ){
@@ -569,7 +576,7 @@ public class UserInterface extends JFrame {
         }
         return null;
     }
-    
+
     private Clase getClaseSeleccionada(){
         String claseSeleccionada = (String) lt_clases.getSelectedValue();
         if( claseSeleccionada == null ){
@@ -584,15 +591,15 @@ public class UserInterface extends JFrame {
         }
         return null;
     }
-    
+
     private void cargarListamMetodos( List<Metodo> nombres){
         Auxiliares.cargarLista(nombres, lt_metodos);
     }
-    
+
     private void cargarListaClases( List<String> nombres){
         Auxiliares.cargarLista(nombres, lt_clases);
     }
-    
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

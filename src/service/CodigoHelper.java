@@ -13,9 +13,9 @@ public class CodigoHelper {
 	int currentLine;
 	
 	private static String[] modificadores = {"public","abstract", "final"};
-	private static final int NO_CLASE = 0; //Aún no entré en la clase
-	private static final int PRE_CLASE = 1; //Estoy en la línea de definición
-	private static final int IN_CLASE = 2; //Estoy dentro de la clase
+	private static final int NO_CLASE = 0;
+	private static final int PRE_CLASE = 1;
+	private static final int IN_CLASE = 2; 
 	
 	private static boolean isModificador(String s){
 		for(String modificador : modificadores){
